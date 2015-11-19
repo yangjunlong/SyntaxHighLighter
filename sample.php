@@ -16,34 +16,22 @@ $css_code = '/*
  * @version $Id$
  */
 
-/*@require common:widget/ui/css/reset.less*/
-
-/*@require common:widget/ui/css/markdown.less*/
-/*清除浮动*/
-.clearfix:after {
-    content: ".";
-    visibility: hidden;
-    display: block;
-    height: 0;
-    overflow: hidden;
-    clear: both;
+// global stylesheet
+body {
+    padding: 0;
+    margin: 0;
+    font-size: 12px;
+    font-family: \'Microsoft Yahei\',"微软雅黑",arial,"宋体",sans-serif;
 }
-
-/* no ie mac \*/
-* html .clearfix {
-    height: 1%;
+#test{
+    color: #ccc;
 }
-/* end */
-* + html .clearfix {
-    height: 1%;
-}
+// layout
+.page {
+    width: 780px;
+    margin: 0 auto;
+    background: #ddd;
+    border: 1px solid #ccc;
+}';
 
-body{
-	color: #333;
-	font-size: 14px;
-}
-
-/* End of file: base.less */
-/* Location: ./common/widget/ui/css/base.less */';
-
-echo SyntaxHighLighter::parse($css_code, 'less');
+echo SyntaxHighLighter::parse($css_code, 'css');

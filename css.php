@@ -47,7 +47,10 @@ return function($genRegex){
 
 	$units     = "/(\\d+)(px|pt|em)/";
 
-	$classname = "/\.[\\s\\S]*?}/m";
+	$idname = "/(\#.*)[ ]*{/m";
+
+	$classname = "/(\..*)[ ]*{/m";
+
 
 	return array(
 		array(
@@ -57,6 +60,14 @@ return function($genRegex){
 		array(
 			'regex' => $units,
 			'css' => 'unit'
+		),
+		array(
+			'regex' => $idname,
+			'css' => 'idname'
+		),
+		array(
+			'regex' => $classname,
+			'css' => 'classname'
 		),
 		array(
 			'regex' => $genRegex($keywords),

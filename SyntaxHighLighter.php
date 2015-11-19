@@ -8,16 +8,18 @@
 
 class SyntaxHighLighter {
 	private static $regexList = array(
-		// 单行注释
-		array(
-			'regex' => "/\/\/.*$/", 
-			'css' => 'comment'
-		),
 		// 多行注释
 		array(
 			'regex' => "/\/\\*[\\s\\S]*?\\*\//m",
 			'css' => 'comment'
 		),
+
+		// 单行注释
+		array(
+			'regex' => "/\/\/.*$/m", 
+			'css' => 'comment'
+		),
+		
 		// 单行#注释
 		array(
 			'regex' => '/#.*$/m',
@@ -26,7 +28,7 @@ class SyntaxHighLighter {
 
 		// 双引号字符串
 		array(
-			'regex' => '/"(?:\\.|(\\\\\\")|[^\\""])*"/',
+			'regex' => '/"(?:\\.|(\\\\\\")|[^\\""])*"/m',
 			'css' => 'string'
 		),
 
@@ -105,7 +107,7 @@ class SyntaxHighLighter {
 			while ( preg_match($regex['regex'], $_code, $matchs)) {
 				//echo $code ."\n\n";
 
-				$mtc = $matchs[0];
+				$mtc = empty($matchs[1]) ? $matchs[0] : $matchs[1];
 				
 
 				$pos = stripos($_code, $mtc );
