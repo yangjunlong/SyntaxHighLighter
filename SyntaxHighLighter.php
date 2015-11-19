@@ -7,7 +7,31 @@
  */
 
 class SyntaxHighLighter {
-	private static $regexList = array(
+	/**
+	 * code string
+	 * 
+	 * @var string
+	 */
+	protected $code = '';
+
+	/**
+	 * code language
+	 * 
+	 * @var string
+	 */
+	protected $lang = '';
+
+	//protected $regexList = array();
+
+	/**
+	 * regex matchs
+	 * 
+	 * @var array
+	 */
+	protected $matchs = array();
+
+
+	protected static $commonRegexList = array(
 		// 多行注释
 		array(
 			'regex' => "/\/\\*[\\s\\S]*?\\*\//m",
@@ -38,101 +62,69 @@ class SyntaxHighLighter {
 			'css' => 'string'
 		)
 	);
-	public static function parse($code, $lang) {
-		$lang = self::fixLang($lang);
-		$regexList = self::importRegex($lang);
 
-		$regexList = array_merge(self::$regexList, $regexList);
+	public function parse($code, $lang) {
+		$this->code = $code;
+		$this->lang = $lang;
+		$this->regexList = array_merge(self::$commonRegexList, $this->regexList);
 
-		$matchs = self::processRegexList($code, $regexList);
+		$this->processRegexList();
 
-		$result = self::processMatchs($code, $matchs);
+		$result = $this->processMatchs();
 
-		$html = self::syntaxPackage($result);
+		$html = $this->syntaxPackage($result);
 
 		return $html;
 	}
 
-	private static function fixLang($lang) {
-		$langList = array(
-			'javascript' => array('js', 'jscript', 'javascript'),
-			'cpp' => array('cpp', 'c', 'c++'),
-			'csharp'=> array('c#', 'c-sharp', 'csharp'),
-			'css' => array('css', 'less'),
-			'delphi'=>array('delphi', 'pascal'),
-			'java'=>array('java'),
-			'php'=>array('php'),
-			'python'=>array('python', 'py'),
-			'ruby'=>array('ruby', 'rails', 'ror'),
-			'sql'=>array('sql'),
-			'vb'=>array('vb','vb.net'),
-			'xml'=>array('xml', 'xhtml', 'xslt', 'html', 'xhtml'),
-		);
+	public function processRegexList() {
+		$regexList = $this->regexList;
 
-		foreach ($langList as $k => $v){
-			if(in_array($lang, $v)){
-				return $k;
-			}
+		foreach ($regexList as $regex) {
+			$this->getMatches($regex['regex'], $regex['css']);
 		}
-
-		return 'javascript';
 	}
 
-	private static function importRegex($lang) {
-		$file = $lang . '.php';
+	public function getMatches($regex, $css){
+		$code   = $this->code;
+		$index  = 0;
+		$length = 0;
 
-		if(!file_exists($file)) {
-	        return false;
-	    }
 
-		static $includedRegex = array();
+		while ( preg_match($regex, $code, $matchs)) {
 
-		if(!isset($includedRegex[$lang])){
-			$genRegex = function($str){
-				return '/\\b' . preg_replace("/ /", '\\b|\\b', $str) . '\\b/';
-			};
-	        $langFun = include $file;
-	        $includedRegex[$lang] = $langFun($genRegex);
-	    }
+			$match  = empty($matchs[1]) ? $matchs[0] : $matchs[1];
 
-	    return $includedRegex[$lang];
-	}
+			$pos    = stripos($code, $match);
+			$index  =  $pos + $index + $length;
+			$length = strlen($match);
+			$code   = substr($code, $pos + $length);
 
-	private static function processRegexList($code, $regexList) {
-		foreach ($regexList as $key => $regex) {
-			$_code = $code;
-			$_index = 0;
-			$_length = 0;
+			$replace = $this->placeholder($length);
 
-			while ( preg_match($regex['regex'], $_code, $matchs)) {
-				//echo $code ."\n\n";
+			$this->code = str_replace($match, $replace, $this->code);
 
-				$mtc = empty($matchs[1]) ? $matchs[0] : $matchs[1];
-				
-
-				$pos = stripos($_code, $mtc );
-
-				$_index =  $pos+$_index+$_length;
-
-				$_length = strlen($mtc);
-
-				$_code = substr($_code, $pos+$_length);
-
-				$_matchs[] = array(
-					'value' => $mtc,
-					'index' =>$_index,
-					'length' => $_length,
-					'css' => $regex['css']
-				);
-
-				//print_r($matchs);
-			}
+			$this->matchs[] = array(
+				'value' => $match,
+				'index' => $index,
+				'length' => $length,
+				'css' => $css
+			);
 		}
-
-		return $_matchs;
 	}
 
-	private static function processMatchs($code, $matchs) {
+	private function placeholder($length) {
+		$out = '';
+		for ($i=0; $i < $length; $i++) { 
+			$out .= ' ';
+		}
+		return $out;
+	}
+
+	private function processMatchs() {
+		$code = $this->code;
+		$matchs = $this->matchs;
+
 		// 根据index为$matchs排序
 		usort($matchs, function($a, $b){
 			if($a['index'] < $b['index']){
@@ -174,7 +166,7 @@ class SyntaxHighLighter {
 		return $result;
 	}
 
-	private static function syntaxPackage($result){
+	private function syntaxPackage($result){
 		$html = '';
 
 		foreach ($result as $key => $snippet) {
@@ -182,5 +174,59 @@ class SyntaxHighLighter {
 		}
 
 		return $html;
+	}
+
+
+	public function genRegex($str){
+		return '/\\b' . preg_replace("/ /", '\\b|\\b', $str) . '\\b/';
+	}
+}
+
+class SyntaxHighLighterFactory {
+
+	private static $includedInstance = array();
+
+	public static function parse($code, $lang) {
+		$lang = self::fixLang($lang);
+		$file = $lang . '.php';
+
+		if(!file_exists($file)) {
+	        return false;
+	    }
+
+		if(!isset(self::$includedInstance[$lang])){
+	        include $file;
+	        $ins = self::$includedInstance[$lang] = new $lang();
+
+	        return $ins->parse($code, $lang);
+	    }
+	}
+
+	private static function fixLang($lang) {
+		// 转小写
+		$lang = strtolower($lang);
+
+		$langList = array(
+			'Javascript' => array('js', 'jscript', 'javascript'),
+			'Cpp' => array('cpp', 'c', 'c++'),
+			'Csharp'=> array('c#', 'c-sharp', 'csharp'),
+			'Css' => array('css', 'less'),
+			'Delphi'=> array('delphi', 'pascal'),
+			'Java'=> array('java'),
+			'Php'=> array('php'),
+			'Python'=> array('python', 'py'),
+			'Ruby'=> array('ruby', 'rails', 'ror'),
+			'Sql'=> array('sql'),
+			'Vb'=> array('vb','vb.net'),
+			'Xml'=> array('xml', 'xhtml', 'xslt', 'html', 'xhtml'),
+		);
+
+		foreach ($langList as $k => $v){
+			if(in_array($lang, $v)){
+				return $k;
+			}
+		}
+
+		return 'Javascript';
 	}
 }

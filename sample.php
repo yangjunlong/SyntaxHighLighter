@@ -34,4 +34,4 @@ body {
     border: 1px solid #ccc;
 }';
 
-echo SyntaxHighLighter::parse($css_code, 'css');
+echo SyntaxHighLighterFactory::parse($css_code, 'php');
