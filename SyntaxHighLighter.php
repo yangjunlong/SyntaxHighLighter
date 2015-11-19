@@ -7,9 +7,40 @@
  */
 
 class SyntaxHighLighter {
+	private static $regexList = array(
+		// 单行注释
+		array(
+			'regex' => "/\/\/.*$/", 
+			'css' => 'comment'
+		),
+		// 多行注释
+		array(
+			'regex' => "/\/\\*[\\s\\S]*?\\*\//m",
+			'css' => 'comment'
+		),
+		// 单行#注释
+		array(
+			'regex' => '/#.*$/m',
+			'css' => 'comment'
+		),
+
+		// 双引号字符串
+		array(
+			'regex' => '/"(?:\\.|(\\\\\\")|[^\\""])*"/',
+			'css' => 'string'
+		),
+
+		// 单引号字符串
+		array(
+			'regex' => "/'(?:\\.|(\\\\\\')|[^\\''])*'/m",
+			'css' => 'string'
+		)
+	);
 	public static function parse($code, $lang) {
 		$lang = self::fixLang($lang);
 		$regexList = self::importRegex($lang);
+
+		$regexList = array_merge(self::$regexList, $regexList);
 
 		$matchs = self::processRegexList($code, $regexList);
 

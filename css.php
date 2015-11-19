@@ -73,10 +73,6 @@ return function($genRegex){
 		array(
 			'regex' => $genRegex($htmls),
 			'css' => 'tag'
-		),
-		array(
-			'regex' => $classname,
-			'css' => 'classname'
 		)
 	);
 };
