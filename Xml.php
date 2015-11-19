@@ -10,6 +10,12 @@ class Xml extends SyntaxHighLighter{
 	// 正则表达式列表
 	public function processRegexList() {
 		
-		// $this->getMatches($regex['regex'], $regex['css']);
+		// Match CDATA in the following format <![ ... [ ... ]]>
+		// (\&lt;|<)\!\[[\w\s]*?\[(.|\s)*?\]\](\&gt;|>)
+		$this->getMatchs("/(\&lt;|<)\\!\\[[\\w\\s]*?\\[(.|\\s)*?\\]\\](\&gt;|>)/", 'cdata');
+
+		// Match comments
+		// (\&lt;|<)!--\s*.*\s*?--(\&gt;|>)
+		$this->getMatchs("/(\&lt;|<)!--\\s*.*\\s*?--(\&gt;|>)/m", 'comment');
 	}
 }

@@ -14,6 +14,8 @@ class SyntaxHighLighter {
 	 */
 	protected $code = '';
 
+	protected $size = 0;
+
 	/**
 	 * code language
 	 * 
@@ -29,6 +31,10 @@ class SyntaxHighLighter {
 	 * @var array
 	 */
 	protected $matchs = array();
+
+	protected $regex = '';
+
+	protected $css = '';
 
 
 	protected static $commonRegexList = array(
@@ -66,7 +72,13 @@ class SyntaxHighLighter {
 	public function parse($code, $lang) {
 		$this->code = $code;
 		$this->lang = $lang;
-		$this->regexList = array_merge(self::$commonRegexList, $this->regexList);
+
+		$this->size = strlen($code);
+
+		if(isset($this->regexList)){
+			$this->regexList = array_merge(self::$commonRegexList, $this->regexList);
+		}
+		
 
 		$this->processRegexList();
 
@@ -81,19 +93,23 @@ class SyntaxHighLighter {
 		$regexList = $this->regexList;
 
 		foreach ($regexList as $regex) {
-			$this->getMatches($regex['regex'], $regex['css']);
+			$this->regex = $regex['regex'];
+			$this->css = $regex['css'];
+			$this->getMatchs();
 		}
 	}
 
-	public function getMatches($regex, $css){
+	public function getMatchs($regex, $css){
+		$regex = empty($regex) ? $this->regex : $regex;
+		$css = empty($css) ? $this->css : $css;
+
 		$code   = $this->code;
 		$index  = 0;
 		$length = 0;
 
-
 		while ( preg_match($regex, $code, $matchs)) {
 
-			$match  = empty($matchs[1]) ? $matchs[0] : $matchs[1];
+			$match  = $this->fixMatchs($matchs);
 
 			$pos    = stripos($code, $match);
 			$index  =  $pos + $index + $length;
@@ -111,6 +127,10 @@ class SyntaxHighLighter {
 				'css' => $css
 			);
 		}
+	}
+
+	public function fixMatchs($matchs){
+		return $matchs[0];
 	}
 
 	private function placeholder($length) {
@@ -163,6 +183,15 @@ class SyntaxHighLighter {
 			$lastIndex = $value['index'] + $value['length'];
 		}
 
+		if($this->size > $lastIndex) {
+			$result[] = array(
+				'value' => substr($code, $lastIndex),
+				'index' =>$lastIndex,
+				'length' => $this->size - $lastIndex,
+				'css' => 'text'
+			);
+		}
+
 		return $result;
 	}
 
@@ -170,7 +199,16 @@ class SyntaxHighLighter {
 		$html = '';
 
 		foreach ($result as $key => $snippet) {
-			$html .= '<span class="'.$snippet['css'].'">'.$snippet['value'].'</span>';
+			if($snippet['css'] == 'text'){
+				$html .= $snippet['value'];
+			} else {
+				$html .= '<span class="'.$snippet['css'].'">'.$snippet['value'].'</span>';
+			}
+			
+		}
+
+		if($html == ''){
+			return  $this->code;
 		}
 
 		return $html;
