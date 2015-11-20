@@ -49,4 +49,4 @@ public:
 };
 ";
 
-echo SyntaxHighLighterFactory::parse($css_code, 'cpp');
+echo SyntaxHighLighterFactory::parse($css_code, 'c#');
