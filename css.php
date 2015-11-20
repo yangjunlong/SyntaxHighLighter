@@ -89,4 +89,12 @@ class Css extends SyntaxHighLighter{
 			)
 		);
 	}
+
+	// 对正则特殊处理
+	public function fixMatchs($matchs){
+		if($this->css == 'classname'){
+			return array($matchs[1]);
+		}
+		return array($matchs[0]);
+	}
 }

@@ -93,15 +93,12 @@ class SyntaxHighLighter {
 		$regexList = $this->regexList;
 
 		foreach ($regexList as $regex) {
-			$this->regex = $regex['regex'];
-			$this->css = $regex['css'];
-			$this->getMatchs();
+			$this->getMatchs($regex['regex'], $regex['css']);
 		}
 	}
 
 	public function getMatchs($regex, $css){
-		$regex = empty($regex) ? $this->regex : $regex;
-		$css = empty($css) ? $this->css : $css;
+		$this->regex = $regex;
 
 		$code   = $this->code;
 		$index  = 0;
@@ -109,28 +106,32 @@ class SyntaxHighLighter {
 
 		while ( preg_match($regex, $code, $matchs)) {
 
-			$match  = $this->fixMatchs($matchs);
+			$matchs  = $this->fixMatchs($matchs, $css);
 
-			$pos    = stripos($code, $match);
-			$index  =  $pos + $index + $length;
-			$length = strlen($match);
-			$code   = substr($code, $pos + $length);
+			foreach ($matchs as  $match => $css2) {
+				
+				//die();
+				$pos    = stripos($code, $match);
+				$index  =  $pos + $index + $length;
+				$length = strlen($match);
+				$code   = substr($code, $pos + $length);
 
-			$replace = $this->placeholder($length);
+				$replace = $this->placeholder($length);
 
-			$this->code = str_replace($match, $replace, $this->code);
+				$this->code = str_replace($match, $replace, $this->code);
 
-			$this->matchs[] = array(
-				'value' => $match,
-				'index' => $index,
-				'length' => $length,
-				'css' => $css
-			);
+				$this->matchs[] = array(
+					'value' => $match,
+					'index' => $index,
+					'length' => $length,
+					'css' => $css2
+				);
+			}
 		}
 	}
 
-	public function fixMatchs($matchs){
-		return $matchs[0];
+	public function fixMatchs($matchs, $css){
+		return array($matchs[0]=>$css);
 	}
 
 	private function placeholder($length) {
