@@ -7,7 +7,7 @@
  */
 
 class Css extends SyntaxHighLighter{
-	// 正则表达式列表
+	
 	public function __construct () {
 		$keywords =	'ascent azimuth background-attachment background-color background-image background-position 
 					background-repeat background baseline bbox border-collapse border-color border-spacing border-style border-top 

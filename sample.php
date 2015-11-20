@@ -8,30 +8,45 @@
 
 require 'SyntaxHighLighter.php';
 
-$css_code = "/**
- * DOMUtil 实现了一些 简单的dom操作
- * 
- * 简单的链式调用
- * 
- * @author junlong.yang
- * @version \$Id: dom.js 12 2015-03-05 04:06:48Z sobird \$
- */
-(function(){
-	Jaring.dom = {
-		get: function(){
-			var el = (typeof  === 'string' ? document.getElementById() : );
-			//el.__jaring_property_ = el.__jaring_property_ || {};
-			Jaring.util.extendIf(el, this,'__jaring_property_');
-			return el;
-		},
+$css_code = "class CHelloWorld
+{
+private:
+	LPTSTR	m_buf[80];
 
-		create: function(tagName){
-			var el = document.createElement(tagName);
-			//el.__jaring_property_ = el.__jaring_property_ || {};
-			Jaring.util.extendIf(el, this,'__jaring_property_');
-			return el;
+public:
+	CHellWorld()
+	{
+		_tcscpy(m_buf, TEXT(\"Hello, world!\");
+	}
+
+	~CHelloWord()
+	{
+	}
+
+	void PrintMessage()
+	{
+		printf(\"%s\n\", m_buf);
+	}
+
+	void PrintMessage2()
+	{
+		for(int i=0; i<10; ++i)
+			PrintMessage();
+	}
+
+	void PrintMessage3()
+	{
+		double z = 10.0;
+
+		while(z)
+		{
+			PrintMessage();
+			z -= 2.0;
 		}
 	}
-})();";
 
-echo SyntaxHighLighterFactory::parse($css_code, 'js');
+	virtual void PrintMessage4() = 0;
+};
+";
+
+echo SyntaxHighLighterFactory::parse($css_code, 'cpp');

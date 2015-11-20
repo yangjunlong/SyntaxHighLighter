@@ -7,7 +7,7 @@
  */
 
 class Javascript extends SyntaxHighLighter{
-	// 正则表达式列表
+	
 	public function __construct () {
 		$keywords =	'abstract boolean break byte case catch char class const continue debugger 
 					default delete do double else enum export extends false final finally float 

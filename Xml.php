@@ -7,7 +7,7 @@
  */
 
 class Xml extends SyntaxHighLighter{
-	// 正则表达式列表
+	
 	public function processRegexList() {
 		
 		// Match CDATA in the following format <![ ... [ ... ]]>

@@ -7,7 +7,7 @@
  */
 
 class Php extends SyntaxHighLighter{
-	// 正则表达式列表
+	
 	public function __construct () {
 		$keywords =	'and or xor __FILE__ __LINE__ array as break case 
 					cfunction class const continue declare default die do else 
