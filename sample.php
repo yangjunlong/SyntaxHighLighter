@@ -8,19 +8,21 @@
 
 require 'SyntaxHighLighter.php';
 
-$css_code = 'import datetime
-import sublime_plugin
-class AddCurrentTimeCommand(sublime_plugin.TextCommand):
-    def run(self, edit):
-        self.view.run_command("insert_snippet", 
-            {
-               "contents": "/**""\n"
-                " * ${1:Description}""\n"
-                " * ""\n"
-                " * @author  Yang,junlong at " "%s" " build." %datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") +"\n"
-                " * @version \$Id\$""\n"
-                " */"                
-            }
-        )';
+$css_code = "procedure llp_ui_work.cxgrdbtblvwcxGrid1DBTableView1DblClick(
+  Sender: TObject);
+begin
+  if Not qry1.Active then Exit ;
+  if qry1.IsEmpty then Exit ;
+  if Not btn1.Visible then
+  begin
+    Application.MessageBox('无法取入数据',
+      '提示',MB_OK+mb_iconinformation) ;
+    Exit ;
+  end;
+  qry2.Filtered := False ;
+  qry2.Filter := 'xuhao = '+qry1.FieldByName('xuhao').AsString ;
+  qry2.Filtered := True ;
+  ShowCustomerDetail(qry2.FieldByName('xuhao').AsInteger);
+end;";
 
-echo SyntaxHighLighterFactory::parse($css_code, 'py');
+echo SyntaxHighLighterFactory::parse($css_code, 'delphi');
