@@ -213,8 +213,8 @@ class SyntaxHighLighter {
 	}
 
 
-	public function genRegex($str){
-		return '/\\b' . preg_replace("/ /", '\\b|\\b', $str) . '\\b/';
+	public function genRegex($str, $mod = ''){
+		return '/\\b' . preg_replace("/ /", '\\b|\\b', $str) . '\\b/' . $mod;
 	}
 }
 
