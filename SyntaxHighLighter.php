@@ -34,8 +34,6 @@ class SyntaxHighLighter {
 
 	protected $regex = '';
 
-	protected $css = '';
-
 
 	protected static $commonRegexList = array(
 		// 多行注释
@@ -98,7 +96,6 @@ class SyntaxHighLighter {
 	}
 
 	public function getMatchs($regex, $css){
-		$this->regex = $regex;
 
 		$code   = $this->code;
 		$index  = 0;

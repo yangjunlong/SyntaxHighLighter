@@ -8,45 +8,19 @@
 
 require 'SyntaxHighLighter.php';
 
-$css_code = "class CHelloWorld
-{
-private:
-	LPTSTR	m_buf[80];
+$css_code = 'import datetime
+import sublime_plugin
+class AddCurrentTimeCommand(sublime_plugin.TextCommand):
+    def run(self, edit):
+        self.view.run_command("insert_snippet", 
+            {
+               "contents": "/**""\n"
+                " * ${1:Description}""\n"
+                " * ""\n"
+                " * @author  Yang,junlong at " "%s" " build." %datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") +"\n"
+                " * @version \$Id\$""\n"
+                " */"                
+            }
+        )';
 
-public:
-	CHellWorld()
-	{
-		_tcscpy(m_buf, TEXT(\"Hello, world!\");
-	}
-
-	~CHelloWord()
-	{
-	}
-
-	void PrintMessage()
-	{
-		printf(\"%s\n\", m_buf);
-	}
-
-	void PrintMessage2()
-	{
-		for(int i=0; i<10; ++i)
-			PrintMessage();
-	}
-
-	void PrintMessage3()
-	{
-		double z = 10.0;
-
-		while(z)
-		{
-			PrintMessage();
-			z -= 2.0;
-		}
-	}
-
-	virtual void PrintMessage4() = 0;
-};
-";
-
-echo SyntaxHighLighterFactory::parse($css_code, 'c#');
+echo SyntaxHighLighterFactory::parse($css_code, 'py');
