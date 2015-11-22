@@ -57,7 +57,7 @@ class Css extends SyntaxHighLighter{
 		$this->regexList = array(
 			array(
 				'regex' => $colors,
-				'css' => 'comment'
+				'css' => 'color'
 			),
 			array(
 				'regex' => $units,

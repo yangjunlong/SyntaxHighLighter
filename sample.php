@@ -8,13 +8,10 @@
 
 require 'SyntaxHighLighter.php';
 
-$css_code = ".test {
-    display: block;
-    display: none;
-    visibility: visible;
-    visibility: hidden;
-}";
+$css_code = '&lt;body&gt;
+    &lt;div class="left" &gt;
+    &lt;div class="right" &gt;
+    &lt;div class="main" &gt;
+&lt;/body&gt;';
 
-echo SyntaxHighLighterFactory::parse($css_code, 'css');
-
-echo SyntaxHighLighterFactory::parse($css_code, 'css');
+echo SyntaxHighLighterFactory::parse($css_code, 'html');

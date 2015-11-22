@@ -31,6 +31,9 @@ class Xml extends SyntaxHighLighter{
 
 				break;
 			case 'mixed':
+				if(!$matchs[1]){
+					return $out;
+				}
 				
 				if($matchs[2]){
 					$out = array_merge($out, array($matchs[1]=>'attr', $matchs[2]=>'attr-val'));
