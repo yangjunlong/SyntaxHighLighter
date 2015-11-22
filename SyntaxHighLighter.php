@@ -70,6 +70,7 @@ class SyntaxHighLighter {
 	public function parse($code, $lang) {
 		$this->code = $code;
 		$this->lang = $lang;
+		$this->matchs = array();
 
 		$this->size = strlen($code);
 
@@ -226,12 +227,16 @@ class SyntaxHighLighterFactory {
 		$lang = self::fixLang($lang);
 		$file = $lang . '.php';
 
-		if(!file_exists($file)) {
+		$cwd = dirname(__FILE__);
+		
+		$filename = $cwd . DIRECTORY_SEPARATOR . $file;
+
+		if(!file_exists($filename)) {
 	        return false;
 	    }
 
 		if(!isset(self::$includedInstance[$lang])){
-	        include $file;
+	        include $filename;
 	        self::$includedInstance[$lang] = new $lang();
 	    }
 
