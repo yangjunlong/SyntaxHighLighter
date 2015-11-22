@@ -56,6 +56,10 @@ class Css extends SyntaxHighLighter{
 
 		$this->regexList = array(
 			array(
+				'regex' => "/(\..*)[ ]*,/m",
+				'css' => 'classname'
+			),
+			array(
 				'regex' => $colors,
 				'css' => 'color'
 			),

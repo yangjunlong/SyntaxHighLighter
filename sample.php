@@ -8,12 +8,10 @@
 
 require 'SyntaxHighLighter.php';
 
-$css_code = '.test {
-    display: block;
-    display: none;
-    visibility: visible;
-    visibility: hidden;
-    background: #122344;
+$css_code = '.left, .right {
+    width: 200px;
+    height: 100%;
+    background: #fefefe;
 }';
 
-echo SyntaxHighLighterFactory::parse($css_code, 'js');
+echo SyntaxHighLighterFactory::parse($css_code, 'css');
