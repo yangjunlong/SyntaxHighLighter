@@ -91,10 +91,10 @@ class Css extends SyntaxHighLighter{
 	}
 
 	// 对正则特殊处理
-	public function fixMatchs($matchs){
-		if($this->css == 'classname'){
-			return array($matchs[1]);
+	public function fixMatchs($matchs, $css){
+		if($css == 'classname'){
+			return array($matchs[1]=>'classname');
 		}
-		return array($matchs[0]);
+		return array($matchs[0]=>$css);
 	}
 }
