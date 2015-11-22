@@ -8,7 +8,9 @@
 
 require 'SyntaxHighLighter.php';
 
-$css_code = '&lt;body&gt;
+$css_code = '
+&lt;!-- sdfdsf --&gt;
+<body&gt;
     &lt;div class="left" &gt;
     &lt;div class="right" &gt;
     &lt;div class="main" &gt;

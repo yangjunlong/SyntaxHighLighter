@@ -106,10 +106,6 @@ class SyntaxHighLighter {
 
 			$matchs  = $this->fixMatchs($matchs, $css);
 
-			if(count($matchs) == 0){
-				return;
-			}
-
 			foreach ($matchs as  $match => $css2) {
 				
 				//die();
