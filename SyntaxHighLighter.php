@@ -232,10 +232,10 @@ class SyntaxHighLighterFactory {
 
 		if(!isset(self::$includedInstance[$lang])){
 	        include $file;
-	        $ins = self::$includedInstance[$lang] = new $lang();
-
-	        return $ins->parse($code, $lang);
+	        self::$includedInstance[$lang] = new $lang();
 	    }
+
+	    return self::$includedInstance[$lang]->parse($code, $lang);
 	}
 
 	private static function fixLang($lang) {

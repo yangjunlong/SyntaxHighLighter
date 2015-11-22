@@ -8,13 +8,40 @@
 
 require 'SyntaxHighLighter.php';
 
-$css_code = "SELECT a.au_fname+a.au_lname
-FROM authors a,titleauthor ta
-(SELECT `title_id`,`title`
-FROM `titles`
-WHERE ` ytd_sales`>10000
-) AS t
-WHERE a.au_id=ta.au_id
-AND ta.title_id=t.title_id";
+$css_code = "fis.config.merge({
+    ...
+    // 插件配置 
+    modules : {
+        // 编译单文件
+        parser : {
+            less : 'less'
+        },
+        // 标准化预处理单文件
+        preprocessor: {
+            css: 'image-set'
+        },
+        // 处理单文件
+        postprocessor: {
+            js: 'jswrapper'
+        },
+        // 代码检查
+        lint: {
+            js : 'jshint'
+        },
+        // 自动测试
+        test: {
+            js : 'phantomjs'
+        },
+        // 优化单文件
+        optimizer : {
+            js : 'uglify-js',
+            tpl : 'tpl-compress'
+        },
+        // 打包后处理csssprite
+        spriter: 'your_spriter'
+    }
+});";
 
-echo SyntaxHighLighterFactory::parse($css_code, 'sql');
+echo SyntaxHighLighterFactory::parse($css_code, 'javascript');
+
+echo SyntaxHighLighterFactory::parse($css_code, 'javascript');
