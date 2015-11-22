@@ -8,12 +8,12 @@
 
 require 'SyntaxHighLighter.php';
 
-$css_code = '
-&lt;!-- sdfdsf --&gt;
-<body&gt;
-    &lt;div class="left" &gt;
-    &lt;div class="right" &gt;
-    &lt;div class="main" &gt;
-&lt;/body&gt;';
+$css_code = '.test {
+    display: block;
+    display: none;
+    visibility: visible;
+    visibility: hidden;
+    background: #122344;
+}';
 
-echo SyntaxHighLighterFactory::parse($css_code, 'html');
+echo SyntaxHighLighterFactory::parse($css_code, 'js');

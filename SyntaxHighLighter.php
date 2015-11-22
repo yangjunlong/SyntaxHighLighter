@@ -75,7 +75,7 @@ class SyntaxHighLighter {
 		$this->size = strlen($code);
 
 		if(isset($this->regexList)){
-			$this->regexList = array_merge($this->regexList, self::$commonRegexList);
+			$this->regexList = array_merge(self::$commonRegexList, $this->regexList);
 		}
 		
 
