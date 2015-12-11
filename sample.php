@@ -8,10 +8,25 @@
 
 require 'SyntaxHighLighter.php';
 
-$css_code = '.left, .right {
+$css_code = 'html, body {
+    margin: 0;
+    height: 100%;
+}
+.main {
+    height: 100%;
+    margin: 0 210px;
+    background: #ccc;
+}
+.left, .right {
     width: 200px;
     height: 100%;
     background: #fefefe;
+}
+.left {
+    float: left;
+}
+.right {
+    float:right
 }';
 
 echo SyntaxHighLighterFactory::parse($css_code, 'css');

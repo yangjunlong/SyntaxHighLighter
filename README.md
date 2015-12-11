@@ -4,13 +4,11 @@
 
 本类库是根据JavaScript版的语法高亮插件的核心代码移植过来，JavaScript版语法高亮插件见如下地址：
 
-http://www.dreamprojections.com/syntaxhighlighter/
-
 ## 使用方法
 ```php
-SyntaxHighLighter::parse($code, $lang);
+SyntaxHighLighterFactory::parse($code, $lang);
 ```
-`SyntaxHighLighter::parse($code, $lang)`接受两个参数`$code`,`$lang`；`$code`为所要高亮的代码片段，`$lang`为高亮代码的语言类型(比如：css，php，js等)
+`SyntaxHighLighterFactory::parse($code, $lang)`接受两个参数`$code`,`$lang`；`$code`为所要高亮的代码片段，`$lang`为高亮代码的语言类型(比如：css，php，js等)
 
 ## 代码示例
 
@@ -42,23 +40,26 @@ body {
     border: 1px solid #ccc;
 }';
 
-$result = SyntaxHighLighter::parse($css_code, 'less');
+$result = SyntaxHighLighterFactory::parse($css_code, 'less');
 ```
 ## 支持的语言类型
 
 ```php
 $langList = array(
-	'javascript' => array('js', 'jscript', 'javascript'),
-	'cpp' => array('cpp', 'c', 'c++'),
-	'csharp'=> array('c#', 'c-sharp', 'csharp'),
-	'css' => array('css', 'less'),
-	'delphi' => array('delphi', 'pascal'),
-	'java' => array('java'),
-	'php' => array('php'),
-	'python'=> array('python', 'py'),
-	'ruby' => array('ruby', 'rails', 'ror'),
-	'sql'=> array('sql'),
-	'vb' => array('vb','vb.net'),
-	'xml' => array('xml', 'xhtml', 'xslt', 'html', 'xhtml'),
+    'Javascript' => array('js', 'jscript', 'javascript'),
+    'Cpp' => array('cpp', 'c', 'c++'),
+    'Csharp'=> array('c#', 'c-sharp', 'csharp'),
+    'Css' => array('css', 'less'),
+    'Delphi'=> array('delphi', 'pascal'),
+    'Java'=> array('java'),
+    'Php'=> array('php'),
+    'Python'=> array('python', 'py'),
+    'Ruby'=> array('ruby', 'rails', 'ror'),
+    'Sql'=> array('sql'),
+    'Vb'=> array('vb','vb.net'),
+    'Xml'=> array('xml', 'xhtml', 'xslt', 'html', 'xhtml'),
 );
 ```
+## 参考
+
+[JavaScript版的语法高亮插件](http://www.dreamprojections.com/syntaxhighlighter/)
