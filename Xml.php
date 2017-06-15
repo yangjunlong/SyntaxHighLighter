@@ -7,48 +7,48 @@
  */
 
 class Xml extends SyntaxHighLighter{
-	
-	public function processRegexList() {
-		
-		// Match CDATA in the following format <![ ... [ ... ]]>
-		// (\&lt;|<)\!\[[\w\s]*?\[(.|\s)*?\]\](\&gt;|>)
-		$this->getMatchs("/(\&lt;|<)\\!\\[[\\w\\s]*?\\[(.|\\s)*?\\]\\](\&gt;|>)/", 'cdata');
+    
+    public function processRegexList() {
+        
+        // Match CDATA in the following format <![ ... [ ... ]]>
+        // (\&lt;|<)\!\[[\w\s]*?\[(.|\s)*?\]\](\&gt;|>)
+        $this->getMatchs("/(\&lt;|<)\\!\\[[\\w\\s]*?\\[(.|\\s)*?\\]\\](\&gt;|>)/", 'cdata');
 
-		// Match comments
-		// (\&lt;|<)!--\s*.*\s*?--(\&gt;|>)
-		$this->getMatchs("/(\&lt;|<)!--\\s*.*\\s*?--(\&gt;|>)/m", 'comment');
+        // Match comments
+        // (\&lt;|<)!--\s*.*\s*?--(\&gt;|>)
+        $this->getMatchs("/(\&lt;|<)!--\\s*.*\\s*?--(\&gt;|>)/m", 'comment');
 
-		$this->getMatchs("/([\:\\w-\.]+)\\s*=\\s*(\".*?\"|\'.*?\'|\\w+)*|(\\w+)/m", 'mixed');
+        $this->getMatchs("/([\:\\w-\.]+)\\s*=\\s*(\".*?\"|\'.*?\'|\\w+)*|(\\w+)/m", 'mixed');
 
-		// $this->getMatchs("/(\&lt;|<)\\*\\?*(?!\\!)|\\*\\?*(\&gt;|>)/m", 'tag');
-	}
+        // $this->getMatchs("/(\&lt;|<)\\*\\?*(?!\\!)|\\*\\?*(\&gt;|>)/m", 'tag');
+    }
 
-	public function fixMatchs($matchs, $css){
-		$out = array();
+    public function fixMatchs($matchs, $css){
+        $out = array();
 
-		switch ($css) {
-			case 'cdata':
+        switch ($css) {
+            case 'cdata':
 
-				break;
-			case 'mixed':		
-				if($matchs[2]){
-					$out = array_merge($out, array($matchs[1]=>'attr', $matchs[2]=>'attr-val'));
-				} else if(($matchs[0] =="lt" || $matchs[0] =="gt")){
-					$out = array_merge($out, array($matchs[0]=>'text'));
-				} else if($matchs[0]){
-					$out = array_merge($out, array($matchs[0]=>'html'));
-				}
+                break;
+            case 'mixed':        
+                if($matchs[2]){
+                    $out = array_merge($out, array($matchs[1]=>'attr', $matchs[2]=>'attr-val'));
+                } else if(($matchs[0] =="lt" || $matchs[0] =="gt")){
+                    $out = array_merge($out, array($matchs[0]=>'text'));
+                } else if($matchs[0]){
+                    $out = array_merge($out, array($matchs[0]=>'html'));
+                }
 
-				return $out;
-				break;
-			case 'tag':
+                return $out;
+                break;
+            case 'tag':
 
-				break;
-			default:
-				
-				break;
-		}
+                break;
+            default:
+                
+                break;
+        }
 
-		return array($matchs[0]=> $css);
-	}
+        return array($matchs[0]=> $css);
+    }
 }
