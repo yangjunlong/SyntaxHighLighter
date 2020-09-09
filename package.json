@@ -1,0 +1,22 @@
+{
+  "name": "syntaxhighlighter",
+  "version": "1.0.0",
+  "description": "SyntaxHighlighter is a fully functional self-contained code syntax highlighter developed in JavaScript.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yangjunlong/SyntaxHighLighter.git"
+  },
+  "keywords": [
+    "syntaxhighlighter"
+  ],
+  "author": "sobird",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yangjunlong/SyntaxHighLighter/issues"
+  },
+  "homepage": "https://github.com/yangjunlong/SyntaxHighLighter#readme"
+}
