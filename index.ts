@@ -5,7 +5,9 @@
  */
 
 export default class Highlighter {
-  constructor(code: string) {}
+  constructor(public code: string) {
+    this.code = code;
+  }
 
   getKeywords(keywords: string): string {
     return '\\b' + keywords.replace(/ /g, '\\b|\\b') + '\\b';
