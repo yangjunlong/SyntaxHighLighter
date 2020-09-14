@@ -7,8 +7,8 @@
 export default class Highlighter {
   constructor(code: string) {}
 
-  getKeywords(keywords: string): RegExp {
-    return 
+  getKeywords(keywords: string): string {
+    return '\\b' + keywords.replace(/ /g, '\\b|\\b') + '\\b';
   }
 
   /**

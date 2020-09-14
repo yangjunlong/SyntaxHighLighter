@@ -18,5 +18,11 @@
   "bugs": {
     "url": "https://github.com/yangjunlong/SyntaxHighLighter/issues"
   },
-  "homepage": "https://github.com/yangjunlong/SyntaxHighLighter#readme"
+  "homepage": "https://github.com/yangjunlong/SyntaxHighLighter#readme",
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^15.0.0",
+    "@rollup/plugin-node-resolve": "^9.0.0",
+    "@rollup/plugin-typescript": "^6.0.0",
+    "rollup": "^2.26.11"
+  }
 }
